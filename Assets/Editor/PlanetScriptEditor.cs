@@ -27,6 +27,8 @@ public class PlanetScriptEditor : Editor {
         EditorGUILayout.MinMaxSlider(ref myTarget.lowElevation, ref myTarget.highElevation, 0f, myTarget.planetSize);
         hasMoons = EditorGUILayout.BeginToggleGroup("Has Moons", hasMoons);
         myTarget.moonAmount = EditorGUILayout.IntField("Number of Moons", myTarget.moonAmount);
+        if (hasMoons == false)
+            myTarget.moonAmount = 0;
         EditorGUILayout.EndToggleGroup();
         EditorGUILayout.EndVertical();
 
@@ -36,7 +38,9 @@ public class PlanetScriptEditor : Editor {
         EditorGUILayout.BeginVertical("box");
         myTarget.radiationAmount = EditorGUILayout.FloatField(new GUIContent("Radiation", "The Earth emits 3-5 mSv per year"), myTarget.radiationAmount);
         myTarget.hasWater = EditorGUILayout.Toggle("Water" ,myTarget.hasWater);
-
+        myTarget.lowTemp = EditorGUILayout.FloatField(new GUIContent("Lowest Temperature", "Measured in Celsius"), myTarget.lowTemp);
+        myTarget.highTemp = EditorGUILayout.FloatField(new GUIContent("Highest Temperature", "Measured in Celsius"), myTarget.highTemp);
+        EditorGUILayout.MinMaxSlider(ref myTarget.lowTemp, ref myTarget.highTemp, 0f, 1000f);
         serializedObject.Update();
         SerializedProperty myElem = serializedObject.FindProperty("mainElements");
         EditorGUILayout.PropertyField(myElem, true);
